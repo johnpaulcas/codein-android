@@ -1,26 +1,28 @@
 package com.johnpaulcas.watchly.base
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 
 /**
  * Created by johnpaulcas on 18/01/2021.
+ *
  */
 abstract class BaseActivity: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(getLayoutResourceId())
+        setContentView(onBindLayoutResource())
         init()
     }
 
     /**
-     * Set activity layout
+     * set activity layout
      */
-    abstract fun getLayoutResourceId(): Int
+    abstract fun onBindLayoutResource(): View
 
     /**
-     * Initialize views/components
+     * method to initialize view/components
      */
     abstract fun init()
 
