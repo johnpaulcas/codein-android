@@ -1,11 +1,18 @@
 package com.johnpaulcas.watchly.ui
 
+import android.view.View
 import com.johnpaulcas.watchly.R
 import com.johnpaulcas.watchly.base.BaseActivity
+import com.johnpaulcas.watchly.databinding.ActivityMainBinding
 
 class MainActivity : BaseActivity() {
 
-    override fun getLayoutResourceId(): Int = R.layout.activity_main
+    private lateinit var binding: ActivityMainBinding
+
+    override fun onBindLayoutResource(): View {
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        return binding.root
+    }
 
     override fun init() {
     }
