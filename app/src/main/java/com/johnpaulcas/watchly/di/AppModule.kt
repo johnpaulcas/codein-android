@@ -1,6 +1,6 @@
 package com.johnpaulcas.watchly.di
 
-import androidx.viewbinding.BuildConfig
+import com.johnpaulcas.watchly.BuildConfig
 import com.johnpaulcas.watchly.api.ApiHelper
 import com.johnpaulcas.watchly.api.ApiHelperImpl
 import com.johnpaulcas.watchly.api.ApiService
@@ -10,8 +10,10 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 /**
@@ -26,7 +28,23 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideOkHttpClient(): OkHttpClient = OkHttpClient.Builder().build()
+    fun provideOkHttpClient(): OkHttpClient = if (BuildConfig.DEBUG) {
+        val loggingInterceptor = HttpLoggingInterceptor()
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+        OkHttpClient.Builder()
+            .addInterceptor(loggingInterceptor)
+            .connectTimeout(200, TimeUnit.SECONDS)
+            .writeTimeout(200, TimeUnit.SECONDS)
+            .readTimeout(200, TimeUnit.SECONDS)
+            .build()
+    } else {
+        OkHttpClient
+            .Builder()
+            .connectTimeout(200, TimeUnit.SECONDS)
+            .writeTimeout(200, TimeUnit.SECONDS)
+            .readTimeout(200, TimeUnit.SECONDS)
+            .build()
+    }
 
     @Singleton
     @Provides
