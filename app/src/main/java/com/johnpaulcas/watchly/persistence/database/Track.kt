@@ -1,11 +1,13 @@
 package com.johnpaulcas.watchly.persistence.database
 
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
 @Entity(tableName = "track_table")
+@Parcelize
 data class Track(
     @PrimaryKey
     val trackId: Int,
@@ -24,4 +26,4 @@ data class Track(
 
     @ColumnInfo(name = "description")
     val longDescription: String
-)
+): Parcelable

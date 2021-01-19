@@ -7,12 +7,12 @@ import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
+import com.google.android.material.card.MaterialCardView
 import com.johnpaulcas.watchly.R
 import com.johnpaulcas.watchly.base.BaseEpoxyHolder
 import com.johnpaulcas.watchly.persistence.database.Track
+import com.johnpaulcas.watchly.utils.OnItemClickListener
 import com.johnpaulcas.watchly.utils.format
-import java.text.MessageFormat
 
 /**
  * Created by johnpaulcas on 19/01/2021.
@@ -24,6 +24,9 @@ abstract class TrackItemModel: EpoxyModelWithHolder<TrackItemModel.TrackItemView
     lateinit var track: Track
     @EpoxyAttribute
     lateinit var context: Context
+    @JvmField
+    @EpoxyAttribute
+    var onItemClickListener: OnItemClickListener<Track>? = null
 
     override fun bind(holder: TrackItemViewModel) {
         super.bind(holder)
@@ -31,13 +34,17 @@ abstract class TrackItemModel: EpoxyModelWithHolder<TrackItemModel.TrackItemView
         holder.tvGenre.text = track.primaryGenreName
         holder.tvPrice.text = track.trackPrice.format(2)
 
-        val glideRequestOptions = RequestOptions()
-            .placeholder(R.drawable.ic_no_image)
-
         Glide.with(context)
-            .setDefaultRequestOptions(glideRequestOptions)
             .load(track.artworkUrl100)
+            .placeholder(R.drawable.ic_no_image)
+            .encodeQuality(100)
+            .centerCrop()
             .into(holder.ivTrack)
+
+        holder.itemContainer.setOnClickListener {
+            onItemClickListener?.onItemClick(track)
+        }
+
     }
 
     inner class TrackItemViewModel: BaseEpoxyHolder() {
@@ -45,5 +52,6 @@ abstract class TrackItemModel: EpoxyModelWithHolder<TrackItemModel.TrackItemView
         val tvTitle by bind<AppCompatTextView>(R.id.tvTitle)
         val tvGenre by bind<AppCompatTextView>(R.id.tvGenre)
         val tvPrice by bind<AppCompatTextView>(R.id.tvPrice)
+        val itemContainer by bind<MaterialCardView>(R.id.itemContainer)
     }
 }

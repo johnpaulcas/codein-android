@@ -1,5 +1,6 @@
 package com.johnpaulcas.watchly.ui.fragments
 
+import android.app.ProgressDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -7,8 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.airbnb.epoxy.Carousel
 import com.airbnb.epoxy.carousel
+import com.google.android.material.dialog.MaterialDialogs
 import com.johnpaulcas.watchly.base.BaseFragment
 import com.johnpaulcas.watchly.persistence.database.Track
 import com.johnpaulcas.watchly.databinding.FragmentHomeBinding
@@ -16,6 +19,7 @@ import com.johnpaulcas.watchly.ui.components.TrackItemModel_
 import com.johnpaulcas.watchly.ui.components.sectionContainer
 import com.johnpaulcas.watchly.ui.components.sectionTitle
 import com.johnpaulcas.watchly.utils.AppConstant
+import com.johnpaulcas.watchly.utils.OnItemClickListener
 import com.johnpaulcas.watchly.utils.Status
 import com.johnpaulcas.watchly.viewmodels.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -65,7 +69,6 @@ class HomeFragment : BaseFragment() {
      */
     private fun setupContainer() {
         binding.ervContainer.withModels {
-
             // loop every sections
             sections.mapIndexed { index, name ->
                 // filter the tracks by category
@@ -90,6 +93,11 @@ class HomeFragment : BaseFragment() {
                                     .id(it.trackId)
                                     .context(requireContext())
                                     .track(it)
+                                    .onItemClickListener(object : OnItemClickListener<Track> {
+                                        override fun onItemClick(obj: Track) {
+                                            handleClickListener(obj)
+                                        }
+                                    })
                             })
                         }
                     }
@@ -103,21 +111,26 @@ class HomeFragment : BaseFragment() {
         viewModel.response.observe(viewLifecycleOwner, Observer {
             when (it.status) {
                 Status.SUCCESS -> {
-                    // TODO update UI success loading data
+                    hideProgress()
                 }
                 Status.ERROR -> {
-                    // TODO handle error
+                    hideProgress()
                 }
                 Status.LOADING -> {
-                    // Todo handle loading
+                    showProgress()
                 }
             }
         })
 
         // Listen for database tracks changes
-        viewModel.tracks.observe(viewLifecycleOwner, Observer {
-            tracks = it!!.toMutableList()
-            binding.ervContainer.requestModelBuild()
+        viewModel.tracks.observe(viewLifecycleOwner, Observer {response ->
+            response?.let {
+                if (tracks.size < 1) {
+                    tracks = it.toMutableList()
+                    binding.ervContainer.requestModelBuild()
+                }
+            }
+
         })
     }
 
@@ -126,6 +139,24 @@ class HomeFragment : BaseFragment() {
      */
     private fun init() {
         viewModel.requestData()
+    }
+
+    private fun handleClickListener(track: Track) {
+        val action = HomeFragmentDirections.actionHomeFragmentToTrackDetailFragment(track)
+        findNavController().navigate(action)
+    }
+
+    private fun showProgress() {
+        // don't show loading when tracks is not empty
+        if (tracks.size > 0) {
+            binding.progress.visibility = View.VISIBLE
+            binding.ervContainer.visibility = View.GONE
+        }
+    }
+
+    private fun hideProgress() {
+        binding.progress.visibility = View.GONE
+        binding.ervContainer.visibility = View.VISIBLE
     }
 
 }

@@ -1,5 +1,7 @@
 package com.johnpaulcas.watchly.utils
 
+import androidx.room.ColumnInfo
+
 /**
  * Created by johnpaulcas on 18/01/2021.
  */
@@ -23,5 +25,17 @@ object AppConstant {
         const val DOCUMENTARY = "Documentary"
         const val ANIME = "Anime"
         const val WESTERN = "Western"
+    }
+
+
+    object DataStore {
+        const val DATE_VISITED = "date_visited"
+        const val LAST_KNOWN_SCREEN = "last_know_screen"
+        const val CACHED_DATA = "cached_data"
+    }
+
+    object Screen {
+        const val HOME = "Watchly"
+        const val TRACK_DETAILS = "Track Details"
     }
 }

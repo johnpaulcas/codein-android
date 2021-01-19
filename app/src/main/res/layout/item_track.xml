@@ -4,6 +4,7 @@
     android:layout_width="120dp"
     android:clickable="true"
     android:focusable="true"
+    android:id="@+id/itemContainer"
     android:layout_marginTop="5dp"
     android:layout_marginBottom="5dp"
     android:layout_marginStart="10dp"
