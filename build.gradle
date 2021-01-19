@@ -22,6 +22,7 @@ buildscript {
         okhttpLoggerVersion = "4.5.0"
         glideVersion = '4.11.0'
         glideCompilerVersion = '4.8.0'
+        datastoreVersion = "1.0.0-alpha06"
     }
     repositories {
         google()

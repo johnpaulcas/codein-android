@@ -6,7 +6,7 @@ package com.johnpaulcas.watchly.persistence.datastore
 object AppDataStore {
 
     fun getDataStore() {
-        
+
     }
 
 }
