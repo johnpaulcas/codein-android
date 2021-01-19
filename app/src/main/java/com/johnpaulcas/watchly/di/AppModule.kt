@@ -1,12 +1,17 @@
 package com.johnpaulcas.watchly.di
 
 import android.app.Application
+import androidx.datastore.DataStore
+import androidx.datastore.preferences.Preferences
+import androidx.datastore.preferences.createDataStore
 import androidx.room.Room
 import com.johnpaulcas.watchly.BuildConfig
 import com.johnpaulcas.watchly.api.ApiHelper
 import com.johnpaulcas.watchly.api.ApiHelperImpl
 import com.johnpaulcas.watchly.api.ApiService
 import com.johnpaulcas.watchly.persistence.database.TrackDatabase
+import com.johnpaulcas.watchly.persistence.datastore.AppDataStore
+import com.johnpaulcas.watchly.persistence.datastore.AppDataStoreImpl
 import com.johnpaulcas.watchly.utils.AppConstant
 import dagger.Module
 import dagger.Provides
@@ -37,6 +42,19 @@ object AppModule {
 
     @Provides
     fun provideTrackDao(database: TrackDatabase) = database.trackDao()
+
+    /** ===================== DataStore DEPENDENCY ==================== */
+    @Singleton
+    @Provides
+    fun provideDataStore(
+        app: Application
+    ): DataStore<Preferences> = app.createDataStore(name = "settings")
+
+    @Singleton
+    @Provides
+    fun provideAppDataStore(
+        dataStore: DataStore<Preferences>
+    ): AppDataStore = AppDataStoreImpl(dataStore)
 
     /** ===================== RETROFIT DEPENDENCY ==================== */
     @Provides
