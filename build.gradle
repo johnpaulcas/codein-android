@@ -23,6 +23,7 @@ buildscript {
         glideVersion = '4.11.0'
         glideCompilerVersion = '4.8.0'
         datastoreVersion = "1.0.0-alpha06"
+        desugarJdkVersion = "1.1.1"
     }
     repositories {
         google()
