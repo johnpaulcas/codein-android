@@ -4,6 +4,8 @@ Watchly display the list of movies from iTunes Search Api, It allow you to brows
 # Architecture
 I used MVVM or Model-View-ViewModel architecture which is the Google recommendation for android developers, In Android, MVC refers to the default pattern where an Activity acts as a controller and XML files are views. MVVM treats both Activity classes and XML files as views, and ViewModel classes are where you write your business logic. It completely separates an app's UI from its logic, I also used Repository Pattern for data processing and to handle api request. I used most of the **jetpack library** like LifeCycleViewModel, Room, DataStore, DataBinding, Hilt, Navigation Components to make the app run smooth and more organize
 
+![MVVM](https://github.com/johnpaulcas/codein-android/blob/main/images/mvvm.png)
+
 ```bash
 ├── watchlyApp
 │   ├── api
@@ -43,4 +45,6 @@ The _UI_ folder contains fragments and components folder, In component folder it
 
 # ViewModels
 ViewModel is part of the Lifecycle library which was designed to help solve common Android Lifecycle challenges and to make apps more maintainable and testable. A ViewModel holds app's UI data in a lifecycle conscious way that survives configuration changes
+
+![Watchly](https://github.com/johnpaulcas/codein-android/blob/main/images/app.png)
 
