@@ -11,6 +11,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.johnpaulcas.watchly.R
 import com.johnpaulcas.watchly.base.BaseEpoxyHolder
 import com.johnpaulcas.watchly.persistence.database.Track
+import com.johnpaulcas.watchly.utils.format
 import java.text.MessageFormat
 
 /**
@@ -26,11 +27,12 @@ abstract class TrackItemModel: EpoxyModelWithHolder<TrackItemModel.TrackItemView
 
     override fun bind(holder: TrackItemViewModel) {
         super.bind(holder)
-        holder.tvTitle.text = if (track.trackName.isNotBlank()) track.trackName else  ""
+        holder.tvTitle.text = track.trackName
         holder.tvGenre.text = track.primaryGenreName
-        holder.tvPrice.text = if (track.trackPrice > 0) MessageFormat.format("$ {0}", track.trackPrice) else "Free!"
+        holder.tvPrice.text = track.trackPrice.format(2)
+
         val glideRequestOptions = RequestOptions()
-//            .placeholder(R.drawable.ic_launcher_background)
+            .placeholder(R.drawable.ic_no_image)
 
         Glide.with(context)
             .setDefaultRequestOptions(glideRequestOptions)

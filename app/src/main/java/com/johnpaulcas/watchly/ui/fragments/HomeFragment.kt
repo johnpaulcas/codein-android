@@ -98,23 +98,26 @@ class HomeFragment : BaseFragment() {
         }
     }
 
-    // Observe data from ViewModel
+    // Observe request data status
     private fun subscribeObserver() {
         viewModel.response.observe(viewLifecycleOwner, Observer {
             when (it.status) {
                 Status.SUCCESS -> {
-                    // save the retrieve data on the instance list
-                    tracks = it?.data?.results!!.toMutableList()
-                    // notify UI for changes
-                    binding.ervContainer.requestModelBuild()
+                    // TODO update UI success loading data
                 }
                 Status.ERROR -> {
-                    Log.d(TAG, "init: ERROR ${it?.message}")
+                    // TODO handle error
                 }
                 Status.LOADING -> {
-                    Log.d(TAG, "init: LOADING")
+                    // Todo handle loading
                 }
             }
+        })
+
+        // Listen for database tracks changes
+        viewModel.tracks.observe(viewLifecycleOwner, Observer {
+            tracks = it!!.toMutableList()
+            binding.ervContainer.requestModelBuild()
         })
     }
 
@@ -122,7 +125,7 @@ class HomeFragment : BaseFragment() {
      * Request tracks
      */
     private fun init() {
-        viewModel.getTracks()
+        viewModel.requestData()
     }
 
 }
