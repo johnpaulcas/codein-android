@@ -1,4 +1,4 @@
-package com.johnpaulcas.watchly.ui.home
+package com.johnpaulcas.watchly.viewmodels
 
 import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
  */
 @FragmentScoped
 class HomeViewModel @ViewModelInject constructor(
-    val homeRepository: HomeRepository
+    private val homeRepository: HomeRepository
 ): ViewModel() {
 
     private val _response = MutableLiveData<Resource<TrackResponse>>()

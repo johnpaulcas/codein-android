@@ -1,9 +1,12 @@
 package com.johnpaulcas.watchly.di
 
+import android.app.Application
+import androidx.room.Room
 import com.johnpaulcas.watchly.BuildConfig
 import com.johnpaulcas.watchly.api.ApiHelper
 import com.johnpaulcas.watchly.api.ApiHelperImpl
 import com.johnpaulcas.watchly.api.ApiService
+import com.johnpaulcas.watchly.persistence.database.TrackDatabase
 import com.johnpaulcas.watchly.utils.AppConstant
 import dagger.Module
 import dagger.Provides
@@ -23,6 +26,19 @@ import javax.inject.Singleton
 @InstallIn(ApplicationComponent::class)
 object AppModule {
 
+    /** ===================== DATABASE/DAO DEPENDENCY ==================== */
+    @Provides
+    @Singleton
+    fun provideDatabase(
+        app: Application,
+    ) = Room.databaseBuilder(app, TrackDatabase::class.java, "track_database")
+            .fallbackToDestructiveMigration()
+            .build()
+
+    @Provides
+    fun provideTrackDao(database: TrackDatabase) = database.trackDao()
+
+    /** ===================== RETROFIT DEPENDENCY ==================== */
     @Provides
     fun provideBaseUrl() = AppConstant.BASE_URL
 
@@ -63,4 +79,5 @@ object AppModule {
     @Singleton
     @Provides
     fun provideApiHelper(apiHelper: ApiHelperImpl): ApiHelper = apiHelper
+
 }

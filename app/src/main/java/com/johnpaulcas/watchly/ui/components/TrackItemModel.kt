@@ -10,7 +10,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.johnpaulcas.watchly.R
 import com.johnpaulcas.watchly.base.BaseEpoxyHolder
-import com.johnpaulcas.watchly.database.model.TrackModel
+import com.johnpaulcas.watchly.persistence.database.Track
 import java.text.MessageFormat
 
 /**
@@ -20,21 +20,21 @@ import java.text.MessageFormat
 abstract class TrackItemModel: EpoxyModelWithHolder<TrackItemModel.TrackItemViewModel>() {
 
     @EpoxyAttribute
-    lateinit var trackModel: TrackModel
+    lateinit var track: Track
     @EpoxyAttribute
     lateinit var context: Context
 
     override fun bind(holder: TrackItemViewModel) {
         super.bind(holder)
-        holder.tvTitle.text = if (trackModel.trackName.isNotBlank()) trackModel.trackName else  "[Track Name Not Available]"
-        holder.tvGenre.text = trackModel.primaryGenreName
-        holder.tvPrice.text = if (trackModel.trackPrice > 0) MessageFormat.format("$ {0}", trackModel.trackPrice) else "Free!"
+        holder.tvTitle.text = if (track.trackName.isNotBlank()) track.trackName else  ""
+        holder.tvGenre.text = track.primaryGenreName
+        holder.tvPrice.text = if (track.trackPrice > 0) MessageFormat.format("$ {0}", track.trackPrice) else "Free!"
         val glideRequestOptions = RequestOptions()
-            .placeholder(R.drawable.ic_placeholder)
+//            .placeholder(R.drawable.ic_launcher_background)
 
         Glide.with(context)
             .setDefaultRequestOptions(glideRequestOptions)
-            .load(trackModel.artworkUrl100)
+            .load(track.artworkUrl100)
             .into(holder.ivTrack)
     }
 

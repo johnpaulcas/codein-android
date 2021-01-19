@@ -1,4 +1,4 @@
-package com.johnpaulcas.watchly.ui.trackdetail
+package com.johnpaulcas.watchly.ui.fragments
 
 import android.os.Bundle
 import android.view.View

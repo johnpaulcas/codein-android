@@ -9,7 +9,7 @@ import javax.inject.Inject
  * Created by johnpaulcas on 18/01/2021.
  */
 class ApiHelperImpl @Inject constructor(
-    val apiService: ApiService
+    private val apiService: ApiService
 ): ApiHelper {
 
     override suspend fun getTracks(): Response<TrackResponse> =

@@ -1,24 +1,23 @@
-package com.johnpaulcas.watchly.ui.home
+package com.johnpaulcas.watchly.ui.fragments
 
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.airbnb.epoxy.Carousel
 import com.airbnb.epoxy.carousel
-import com.johnpaulcas.watchly.R
 import com.johnpaulcas.watchly.base.BaseFragment
-import com.johnpaulcas.watchly.database.model.TrackModel
+import com.johnpaulcas.watchly.persistence.database.Track
 import com.johnpaulcas.watchly.databinding.FragmentHomeBinding
 import com.johnpaulcas.watchly.ui.components.TrackItemModel_
 import com.johnpaulcas.watchly.ui.components.sectionContainer
 import com.johnpaulcas.watchly.ui.components.sectionTitle
 import com.johnpaulcas.watchly.utils.AppConstant
 import com.johnpaulcas.watchly.utils.Status
+import com.johnpaulcas.watchly.viewmodels.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -46,7 +45,7 @@ class HomeFragment : BaseFragment() {
     // binding instance
     private lateinit var binding: FragmentHomeBinding
 
-    private var tracks = mutableListOf<TrackModel>()
+    private var tracks = mutableListOf<Track>()
 
     // bind view on Fragment
     override fun onBindLayoutResource(inflater: LayoutInflater, container: ViewGroup?): View {
@@ -90,7 +89,7 @@ class HomeFragment : BaseFragment() {
                                 TrackItemModel_()
                                     .id(it.trackId)
                                     .context(requireContext())
-                                    .trackModel(it)
+                                    .track(it)
                             })
                         }
                     }
