@@ -7,7 +7,7 @@ Watchly display the list of movies from iTunes Search Api, It allow you to brows
 # Architecture
 I used MVVM or Model-View-ViewModel architecture which is the Google recommendation for android developers, In Android, MVC refers to the default pattern where an Activity acts as a controller and XML files are views. MVVM treats both Activity classes and XML files as views, and ViewModel classes are where you write your business logic. It completely separates an app's UI from its logic, I also used Repository Pattern for data processing and to handle api request. I used most of the **jetpack library** like LifeCycleViewModel, Room, DataStore, DataBinding, Hilt, Navigation Components to make the app run smooth and more organize
 
-![MVVM](https://github.com/johnpaulcas/codein-android/blob/main/images/mvvm.png)
+![MVVM](https://github.com/johnpaulcas/codein-android/blob/main/images/mvvm.png) 
 
 ```bash
 ├── watchlyApp
@@ -51,6 +51,12 @@ ViewModel is part of the Lifecycle library which was designed to help solve comm
 
 # Screenshots
 ![Watchly](https://github.com/johnpaulcas/codein-android/blob/main/images/app.png)
+
+# MAD (Modern Android Development) Scored for This Project
+![Kotlin](https://github.com/johnpaulcas/codein-android/blob/main/images/mad_scorecard/kotlin.png)
+![AndroidStudio](https://github.com/johnpaulcas/codein-android/blob/main/images/mad_scorecard/studio.png)
+![Jetpack](https://github.com/johnpaulcas/codein-android/blob/main/images/mad_scorecard/jetpack.png)
+![Summary](https://github.com/johnpaulcas/codein-android/blob/main/images/mad_scorecard/summary.png)
 
 
 
