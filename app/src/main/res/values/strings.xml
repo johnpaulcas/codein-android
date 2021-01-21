@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">WatchLy</string>
+    <string name="err_loading">Something went wrong. Please check your internet connection or refresh to continue :(</string>
+    <string name="refresh">Refresh</string>
 </resources>

@@ -111,10 +111,10 @@ class HomeFragment : BaseFragment() {
         viewModel.response.observe(viewLifecycleOwner, Observer {
             when (it.status) {
                 Status.SUCCESS -> {
-                    hideProgress()
+                    hideProgressAndError()
                 }
                 Status.ERROR -> {
-                    hideProgress()
+                    showError()
                 }
                 Status.LOADING -> {
                     showProgress()
@@ -139,24 +139,41 @@ class HomeFragment : BaseFragment() {
      */
     private fun init() {
         viewModel.requestData()
+
+        binding.btnRefresh.setOnClickListener {
+            viewModel.requestData()
+        }
     }
+
 
     private fun handleClickListener(track: Track) {
         val action = HomeFragmentDirections.actionHomeFragmentToTrackDetailFragment(track)
         findNavController().navigate(action)
     }
 
+    private fun hideProgressAndError() {
+        binding.llError.visibility = View.GONE
+        binding.progress.visibility = View.GONE
+        binding.ervContainer.visibility = View.VISIBLE
+    }
+
     private fun showProgress() {
         // don't show loading when tracks is not empty
         if (tracks.size > 0) {
+            binding.llError.visibility = View.GONE
             binding.progress.visibility = View.VISIBLE
             binding.ervContainer.visibility = View.GONE
         }
     }
 
-    private fun hideProgress() {
-        binding.progress.visibility = View.GONE
-        binding.ervContainer.visibility = View.VISIBLE
+    private fun showError() {
+        if (tracks.size <= 0) {
+            binding.llError.visibility = View.VISIBLE
+            binding.progress.visibility = View.GONE
+            binding.ervContainer.visibility = View.GONE
+        } else {
+            hideProgressAndError()
+        }
     }
 
 }

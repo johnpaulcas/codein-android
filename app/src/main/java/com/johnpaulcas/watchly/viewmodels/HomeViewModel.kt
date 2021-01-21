@@ -45,7 +45,6 @@ class HomeViewModel @ViewModelInject constructor(
                     _response.postValue(Resource.success(null))
 
                 } else {
-                    Log.d("LOGS", "requestData: ${response.errorBody().toString()}")
                     _response.postValue(Resource.error(response.errorBody().toString(), null))
                 }
             }
