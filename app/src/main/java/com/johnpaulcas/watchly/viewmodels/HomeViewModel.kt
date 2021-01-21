@@ -9,10 +9,10 @@ import androidx.lifecycle.viewModelScope
 import com.johnpaulcas.watchly.persistence.database.Track
 import com.johnpaulcas.watchly.persistence.database.TrackDao
 import com.johnpaulcas.watchly.repositories.home.HomeRepository
-import com.johnpaulcas.watchly.utils.NetworkUtil
 import com.johnpaulcas.watchly.utils.Resource
 import dagger.hilt.android.scopes.FragmentScoped
 import kotlinx.coroutines.launch
+import java.lang.Exception
 
 /**
  * Created by johnpaulcas on 18/01/2021.
@@ -23,9 +23,9 @@ class HomeViewModel @ViewModelInject constructor(
     private val trackDao: TrackDao
 ): ViewModel() {
 
-    private val _response = MutableLiveData<Resource<List<Track>>>()
+    private val _response = MutableLiveData<Resource<List<Unit>>>()
 
-    val response: LiveData<Resource<List<Track>>>
+    val response: LiveData<Resource<List<Unit>>>
         get() = _response
 
     val tracks: LiveData<List<Track>>
@@ -34,10 +34,7 @@ class HomeViewModel @ViewModelInject constructor(
 
     fun requestData() = viewModelScope.launch {
         _response.postValue(Resource.loading(null))
-
-        val isInternetAvailable = NetworkUtil.isInternetAvailable()
-        // check internet availability
-        if (isInternetAvailable) {
+        try {
             homeRepository.getTracks().let { response ->
                 if (response.isSuccessful) {
                     val tracks = response.body()?.results
@@ -52,8 +49,8 @@ class HomeViewModel @ViewModelInject constructor(
                     _response.postValue(Resource.error(response.errorBody().toString(), null))
                 }
             }
-        } else {
-            _response.postValue(Resource.error("No internet :(", null))
+        } catch (e: Exception) {
+            _response.postValue(Resource.error("Something went wrong :(", null))
         }
     }
 
