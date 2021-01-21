@@ -2,7 +2,7 @@
 
 Watchly display the list of movies from iTunes Search Api, It allow you to browse and see the details of each item, This project repo showcase the used of MVVM architecture and some of jetpack libraries 
 <br />
-[Download App Here](https://drive.google.com/file/d/1M1LKRx6eiLyJniDLtA6WAgWZjfuPXq1w/view)
+[Download App Here](https://drive.google.com/file/d/1I-uYs2hRxbwzqguEuPdtEXesMyI5mxLD/view?usp=sharing)
 
 # Architecture
 I used MVVM or Model-View-ViewModel architecture which is the Google recommendation for android developers, In Android, MVC refers to the default pattern where an Activity acts as a controller and XML files are views. MVVM treats both Activity classes and XML files as views, and ViewModel classes are where you write your business logic. It completely separates an app's UI from its logic, I also used Repository Pattern for data processing and to handle api request. I used most of the **jetpack library** like LifeCycleViewModel, Room, DataStore, DataBinding, Hilt, Navigation Components to make the app run smooth and more organize
